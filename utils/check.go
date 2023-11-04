@@ -17,11 +17,16 @@ type tcpingRes struct {
 }
 
 func Check() (bool, error) {
-	ip, err := GetIP()
-	if err != nil {
-		return false, err
+	var ip string
+	if !Conf.GetBool(`GetIP`) || Conf.GetString(`SpecifiedHost`) == "" {
+		raw, err := GetIP()
+		if err != nil {
+			return false, err
+		}
+		ip = strings.TrimSpace(raw)
+	} else {
+		ip = Conf.GetString(`SpecifiedHost`)
 	}
-	ip = strings.TrimSpace(ip)
 
 	times, ok := 0, false
 	var final error
