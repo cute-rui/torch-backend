@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"github.com/go-co-op/gocron"
 	"log"
 	"time"
@@ -9,13 +10,22 @@ import (
 )
 
 var Instance instance.Instance
+var force bool
 
 func main() {
+	flag.BoolVar(&force, "f", false, "force run once")
+
 	i, err := instance.NewInstanceByType()
 	if err != nil {
 		panic(err)
 	}
 	Instance = i
+
+	if force {
+		log.Println(utils.Check())
+		log.Println(Instance.UpdateIP())
+		return
+	}
 
 	s := gocron.NewScheduler(time.UTC)
 	_, err = s.Every(utils.Conf.GetString("Frequency")).Do(Check)

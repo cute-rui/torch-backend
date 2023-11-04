@@ -25,7 +25,6 @@ func init() {
 	Conf.SetDefault("Frequency", "")
 
 	Conf.SetDefault("Instance.Type", "")
-	Conf.SetDefault("Token", "")
 
 	replacer := strings.NewReplacer(".", "_")
 	Conf.SetEnvKeyReplacer(replacer)
