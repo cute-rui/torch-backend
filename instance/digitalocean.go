@@ -25,7 +25,9 @@ func (do *DigitalOcean) UpdateIP() error {
 			final = err
 			continue
 		}
-
+		if reservedIPs == nil {
+			break
+		}
 		for i := range reservedIPs {
 			if reservedIPs[i].Droplet.ID == do.DropletID {
 				_, err = do.client.ReservedIPs.Delete(context.Background(), reservedIPs[i].IP)
