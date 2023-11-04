@@ -3,6 +3,7 @@ package instance
 import (
 	"context"
 	"github.com/digitalocean/godo"
+	"time"
 	"torch-client/dns"
 	"torch-client/utils"
 )
@@ -41,7 +42,7 @@ func (do *DigitalOcean) UpdateIP() error {
 		return final
 	}
 	retry = 0
-
+	time.Sleep(30 * time.Second)
 	for retry < 5 {
 		ip, _, err := do.client.ReservedIPs.Create(context.Background(), &godo.ReservedIPCreateRequest{DropletID: do.DropletID})
 		if err != nil {

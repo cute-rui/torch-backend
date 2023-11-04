@@ -14,6 +14,7 @@ var force bool
 
 func main() {
 	flag.BoolVar(&force, "f", false, "force run once")
+	flag.Parse()
 
 	i, err := instance.NewInstanceByType()
 	if err != nil {
@@ -43,6 +44,7 @@ func Check() {
 	}
 
 	if ok {
+		log.Println(`check success`)
 		return
 	}
 

@@ -5,6 +5,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/lightsail"
+	"time"
 	"torch-client/dns"
 	"torch-client/utils"
 )
@@ -53,6 +54,7 @@ func (l *Lightsail) UpdateIP() error {
 		return final
 	}
 	retry = 0
+	time.Sleep(30 * time.Second)
 	for retry < 5 {
 		_, err := l.Svc.AllocateStaticIp(context.Background(), &lightsail.AllocateStaticIpInput{StaticIpName: &l.IPName}, WithRegion(utils.Conf.GetString("Lightsail.Region")))
 		if err != nil {
@@ -68,6 +70,7 @@ func (l *Lightsail) UpdateIP() error {
 		return final
 	}
 	retry = 0
+	time.Sleep(30 * time.Second)
 	for retry < 5 {
 		_, err := l.Svc.AttachStaticIp(context.Background(), &lightsail.AttachStaticIpInput{StaticIpName: &l.IPName, InstanceName: &l.InstanceName}, WithRegion(utils.Conf.GetString("Lightsail.Region")))
 		if err != nil {
