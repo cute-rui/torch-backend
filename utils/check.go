@@ -18,7 +18,7 @@ type tcpingRes struct {
 
 func Check() (bool, error) {
 	var ip string
-	if !Conf.GetBool(`GetIP`) || Conf.GetString(`SpecifiedHost`) == "" {
+	if Conf.GetBool(`GetIP`) || Conf.GetString(`SpecifiedHost`) == "" {
 		raw, err := GetIP()
 		if err != nil {
 			return false, err
