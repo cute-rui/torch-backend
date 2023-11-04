@@ -54,7 +54,7 @@ func (l *Lightsail) UpdateIP() error {
 		return final
 	}
 	retry = 0
-	time.Sleep(5 * time.Second)
+	time.Sleep(10 * time.Second)
 	for retry < 5 {
 		_, err := l.Svc.AllocateStaticIp(context.Background(), &lightsail.AllocateStaticIpInput{StaticIpName: &l.IPName}, WithRegion(utils.Conf.GetString("Lightsail.Region")))
 		if err != nil {
@@ -70,7 +70,7 @@ func (l *Lightsail) UpdateIP() error {
 		return final
 	}
 	retry = 0
-	time.Sleep(5 * time.Second)
+	time.Sleep(10 * time.Second)
 	for retry < 5 {
 		_, err := l.Svc.AttachStaticIp(context.Background(), &lightsail.AttachStaticIpInput{StaticIpName: &l.IPName, InstanceName: &l.InstanceName}, WithRegion(utils.Conf.GetString("Lightsail.Region")))
 		if err != nil {
@@ -84,7 +84,7 @@ func (l *Lightsail) UpdateIP() error {
 	if retry == 5 {
 		return final
 	}
-	time.Sleep(5 * time.Second)
+	time.Sleep(10 * time.Second)
 	return l.DNS.UpdateDNS()
 }
 

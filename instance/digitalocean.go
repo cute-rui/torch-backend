@@ -42,7 +42,7 @@ func (do *DigitalOcean) UpdateIP() error {
 		return final
 	}
 	retry = 0
-	time.Sleep(5 * time.Second)
+	time.Sleep(30 * time.Second)
 	for retry < 5 {
 		ip, _, err := do.client.ReservedIPs.Create(context.Background(), &godo.ReservedIPCreateRequest{DropletID: do.DropletID})
 		if err != nil {
